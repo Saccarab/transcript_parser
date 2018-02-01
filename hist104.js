@@ -3,7 +3,7 @@ function vito_andolini(){
 	//to-do remove arr[i] mods
 
 	let keywords = ["INTERVIEW DATE:", "BIRTH DATE:", "RUNNING TIME:", "INTERVIEWER:", "RECORDING ENGINEER:",
-	 "INTERVIEW LOCATION:", "TRANSCRIPT RECONCEIVED BY:", "TRANSCRIPT PREPARED BY:", "TRANSCRIPT REVIEWED BY:", "TRANSCRIPT ORIGINALLY PREPARED BY:", "TRANSCRIPT NOT REVIEWED"]
+	 "INTERVIEW LOCATION:", "TRANSCRIPT RECONCEIVED BY:", "TRANSCRIBER'S NOTE:", "TRANSCRIPT PREPARED BY:", "TRANSCRIPT REVIEWED BY:", "TRANSCRIPT ORIGINALLY PREPARED BY:", "TRANSCRIPT NOT REVIEWED"]
 
 	let suff_lastname = ["DI", "VON", "DE", "DEL"]
 
@@ -34,6 +34,10 @@ function vito_andolini(){
 				immigrant = arr[i-1].trim() + ':'
 			arr.splice(i+1, 1);
 		}
+		else if (arr[i] === 'BIRTHDATE:'){
+			immigrant = arr[i-1].trim() + ':'
+			text += "<br><b>BIRTH DATE:</b>"	
+		}
 		else if (arr[i] === 'INTERVIEWER:'){
 			arr[i] = "\nINTERVIEWER:"
 			text += "<br><b>INTERVIEWER:</b>"
@@ -63,6 +67,10 @@ function vito_andolini(){
 			text += "<br><b>TRANSCRIPT REVIEWED BY: </b>"
 			arr.splice(i+1, 2);
 		}
+		else if (arr[i] === "TRANSCRIBER'S" && arr[i+1] === 'NOTE:'){
+			text += "<br><b>TRANSCRIBER'S NOTE: </b>"
+			arr.splice(i+1, 2);
+		}
 		else if (arr[i] === 'TRANSCRIPT' && arr[i+1] === 'NOT'){
 			text += "<br><b>TRANSCRIPT NOT REVIEWED</b><br>"
 			arr.splice(i+1, 2);
@@ -90,8 +98,14 @@ function vito_andolini(){
 		else if (arr[i] === interviewer){
 			text += `<br><b>${interviewer} </b>`
 		}
+		else if (interviewer != "" && arr[i].substring(0, interviewer.length) === interviewer){
+			text += `<br><b>${interviewer} </b>${arr[i].substring(interviewer.length, arr[i].length)} `
+		}
 		else if (arr[i] === immigrant){
 			text += `<br><b>${immigrant} </b>`
+		}
+		else if (immigrant != "" && arr[i].substring(0, immigrant.length) === immigrant){
+			text += `<br><b>${immigrant} </b>${arr[i].substring(immigrant.length, arr[i].length)} `
 		}
 		else if (suff && `${arr[i]} ${arr[i+1]}` === immigrant){
 			text += `<br><b>${immigrant} </b>`
