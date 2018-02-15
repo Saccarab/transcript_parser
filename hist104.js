@@ -111,7 +111,9 @@ function vito_andolini(){
 			text += `<br><b>${immigrant} </b>`
 			i++ //skip once
 		}
-
+		else if (arr[i].slice(-1) === ":"){
+			text += `<br><b>${arr[i]}</b>`
+		}
 		else// nth
 		{
 			//check on 3rd speaker?
